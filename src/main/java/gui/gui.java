@@ -6,6 +6,7 @@ package gui;
 
 import com.mycompany.arbolpractica.Arbol;
 import com.mycompany.arbolpractica.Nodo;
+import java.util.ArrayList;
 
 /**
  *
@@ -315,12 +316,10 @@ public class gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editarField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editarField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -358,13 +357,24 @@ public class gui extends javax.swing.JFrame {
         jLabel5.setText("Recorridos");
 
         recorridoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recorrido In-Orden", "Recorrido Pre-Orden", "Recorrido Post-Orden" }));
+        recorridoBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recorridoBoxActionPerformed(evt);
+            }
+        });
 
         recorridoText.setColumns(20);
         recorridoText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         recorridoText.setRows(5);
+        recorridoText.setText("...\n");
         jScrollPane1.setViewportView(recorridoText);
 
         recorridosButton.setText("Imprimir");
+        recorridosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recorridosButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -435,7 +445,9 @@ public class gui extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarFieldActionPerformed
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
-        // TODO add your handling code here:
+        double dato = Double.parseDouble(eliminarField.getText());
+        a.eliminar(dato);
+        eliminarField.setText("");
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     private void buscarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFieldActionPerformed
@@ -503,6 +515,51 @@ public class gui extends javax.swing.JFrame {
         buscarField.setText("");
         buscar.setText("");
     }//GEN-LAST:event_buscarButtonLimpiarActionPerformed
+
+    private void recorridoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recorridoBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_recorridoBoxActionPerformed
+
+    private void recorridosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recorridosButtonActionPerformed
+        if(recorridoBox.getSelectedIndex() == 0){
+            ArrayList<Double> list;
+            list = a.obtenerInorden();
+            
+            if(list != null){
+                StringBuilder sb = new StringBuilder();
+                for (Double dato : list) {
+                    sb.append(dato).append(", "); 
+                }
+                recorridoText.setText(sb.toString());
+            }
+            
+        }else if(recorridoBox.getSelectedIndex() == 1){
+            ArrayList<Double> list;
+            list = a.obtenerPreorden();
+            
+            if(list != null){
+                StringBuilder sb = new StringBuilder();
+                for (Double dato : list) {
+                    sb.append(dato).append(", "); 
+                }
+                recorridoText.setText(sb.toString());
+            }
+            
+        }else {
+            ArrayList<Double> list;
+            list = a.obtenerPostorden();
+            
+            if(list != null){
+                StringBuilder sb = new StringBuilder();
+                for (Double dato : list) {
+                    sb.append(dato).append(", "); 
+                }
+                recorridoText.setText(sb.toString());
+            }
+            
+        }
+        
+    }//GEN-LAST:event_recorridosButtonActionPerformed
 
     /**
      * @param args the command line arguments
